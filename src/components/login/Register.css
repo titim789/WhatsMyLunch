@@ -1,0 +1,16 @@
+.Register-Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 45px;
+  border-color: #1976d2;
+}
+
+.Form-Buttons {
+  padding-top: 20px;
+}
+
+.Form-Buttons button {
+  margin: 5px;
+}

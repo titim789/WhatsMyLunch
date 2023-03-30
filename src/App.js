@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Login from "./components/login/Login";
+import CustomToast from "./components/custom/CustomToast";
+import { useLocation, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { verifyToken } from "./api";
+import FrontPage from "./components/FrontPage";
 
-function App() {
+const App = () => {
+  const [hasAccess, setHasAccess] = useState(false);
+
+  const checkAuth = () => {
+    verifyToken()
+      .then((res) => {
+        setHasAccess((hasAccess) => !hasAccess);
+      })
+      .catch((err) => {
+        setHasAccess(false);
+      });
+  };
+
+  useEffect(checkAuth, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CustomToast />
+
+      {!hasAccess ? (
+        <Login />
+      ) : (
+        <div>
+          <Routes>
+            <Route
+              path="/front-page"
+              element={<FrontPage checkAuth={checkAuth} />}
+            />
+          </Routes>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
