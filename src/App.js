@@ -1,7 +1,7 @@
 import "./App.css";
 import Login from "./components/login/Login";
 import CustomToast from "./components/custom/CustomToast";
-import { useLocation, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { verifyToken } from "./api";
 import FrontPage from "./components/FrontPage";
@@ -12,27 +12,26 @@ const App = () => {
   const checkAuth = () => {
     verifyToken()
       .then((res) => {
+        console.log("Token Verfied");
         setHasAccess((hasAccess) => !hasAccess);
       })
       .catch((err) => {
+        console.log("Unauthorised");
         setHasAccess(false);
       });
   };
 
   useEffect(checkAuth, []);
   return (
-    <div className="App">
+    <div class="App">
       <CustomToast />
 
       {!hasAccess ? (
-        <Login />
+        <Login setHasAccess={setHasAccess} />
       ) : (
         <div>
           <Routes>
-            <Route
-              path="/front-page"
-              element={<FrontPage checkAuth={checkAuth} />}
-            />
+            <Route path="/" element={<FrontPage checkAuth={checkAuth} />} />
           </Routes>
         </div>
       )}

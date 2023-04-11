@@ -15,14 +15,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 
-import { login, logout, verifyToken } from "../../api/index";
-// import ModalDialog from "../common/ModalDialog";
+import { login } from "../../api/index";
 import Register from "./Register";
 import ForgetPassword from "./ForgetPassword";
 
-export default function Login() {
+const Login = ({ setHasAccess }) => {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies();
   const [openRegisterForm, setOpenRegisterForm] = useState(false);
   const [openForgetPasswordForm, setForgetPasswordForm] = useState(false);
 
@@ -48,9 +49,11 @@ export default function Login() {
       login({ username: username, password: password })
         .then((res) => {
           const msg = res.data["msg"];
-          console.log(res);
+          // console.log(res.data["accessToken"]);
           toast.success("Login Successful");
-          navigate("/front-page");
+          setCookie("access_token", res.data["accessToken"]);
+          setHasAccess(true);
+          navigate("/");
         })
         .catch((err) => {
           console.log(err);
@@ -67,7 +70,11 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      style={{ background: "white", padding: "30px", border: "solid 1px" }}
+    >
       <Box
         sx={{
           marginTop: 8,
@@ -130,4 +137,6 @@ export default function Login() {
       </Dialog>
     </Container>
   );
-}
+};
+
+export default Login;

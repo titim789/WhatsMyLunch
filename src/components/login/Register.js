@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 
 const Register = ({ handleClose }) => {
   // create state variables for each input
-  const [firstName, setFirstName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, confPassword, email, password);
+    console.log(username, confPassword, email, password);
     //send req to backend
     //if success
     if (true) {
@@ -30,12 +30,12 @@ const Register = ({ handleClose }) => {
       <TextField
         margin="normal"
         fullWidth
-        label="First Name"
+        label="Username"
         variant="filled"
         required
         autoFocus
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
         margin="normal"
