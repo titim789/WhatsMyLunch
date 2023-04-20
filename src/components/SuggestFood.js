@@ -44,9 +44,9 @@ const SuggestFood = ({ checkAuth }) => {
   return (
     <div class="suggest-food">
       <Header />
-      {`Food Recommendation: ${userRecommendation}`}
       <Location onLocationChange={handleLocationChange} />
       <Map location={location} food={userRecommendation} />
+      <h1>{`Food Recommendation: ${userRecommendation}`}</h1>
     </div>
   );
 };

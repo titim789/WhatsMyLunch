@@ -14,6 +14,7 @@ const USERS_TOP_FOOD_CHOICE_ENDPOINT = `${SERVER_DOMAIN}/userstopfoodchoice`;
 const WML_ENDPOINT = `${SERVER_DOMAIN}/wml`;
 const SURPRISE_ME_ENDPOINT = `${SERVER_DOMAIN}/surprise`;
 const FOOD_DATASET_ENDPOINT = `${SERVER_DOMAIN}/fooddataset`;
+const GOOGLE_NEARBY_FOOD_ENDPOINT = `${SERVER_DOMAIN}/getnearbyfood`;
 
 //Authentication
 export const login = (payload) => axios.post(USER_LOGIN_ENDPOINT, payload);
@@ -57,3 +58,9 @@ export const getFoodDatasetByIds = (payload) =>
 //Users palette
 export const getUsersTastePalette = () =>
   axios.get(USERS_TASTE_PALETTE_ENDPOINT, { withCredentials: true });
+
+//Google API
+export const getGoogleNearbyFood = async (payload) =>
+  await axios.post(GOOGLE_NEARBY_FOOD_ENDPOINT, payload, {
+    withCredentials: true,
+  });
