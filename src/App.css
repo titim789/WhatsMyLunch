@@ -4,8 +4,8 @@
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-  background-image: url("assets/bg.gif");
-  background-size: 33% 33%;
+  background-image: url("assets/images/bg.gif");
+  background-size: 10%;
 }
 
 .App-logo {

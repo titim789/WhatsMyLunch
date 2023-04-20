@@ -1,0 +1,10 @@
+.wml-icon {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+}
+
+.wml-icon:hover {
+  cursor: pointer;
+}

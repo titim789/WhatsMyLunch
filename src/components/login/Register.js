@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./Register.css";
 import { toast } from "react-toastify";
+import { register } from "../../api";
 
 const Register = ({ handleClose }) => {
   // create state variables for each input
@@ -15,14 +16,19 @@ const Register = ({ handleClose }) => {
     e.preventDefault();
     console.log(username, confPassword, email, password);
     //send req to backend
-    //if success
-    if (true) {
-      toast.success("Account Registered, Please Login.");
-      handleClose();
-    } else {
-      //Insert Error here
-      toast.error("Error");
-    }
+    register({
+      username: username,
+      email: email,
+      password: password,
+      confPassword: confPassword,
+    })
+      .then((res) => {
+        toast.success("Account Registered, Please Login.");
+        handleClose();
+      })
+      .catch((error) => {
+        toast.error("Error");
+      });
   };
 
   return (

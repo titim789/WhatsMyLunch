@@ -43,17 +43,16 @@ const Login = ({ setHasAccess }) => {
     const username = data.get("username");
     const password = data.get("password");
     if (!username | !password) {
-      console.error("Either Username or Password is empty");
+      // console.error("Either Username or Password is empty");
       toast.error("Either Username or Password is empty");
     } else {
       login({ username: username, password: password })
         .then((res) => {
           const msg = res.data["msg"];
-          // console.log(res.data["accessToken"]);
-          toast.success("Login Successful");
-          setCookie("access_token", res.data["accessToken"]);
           setHasAccess(true);
           navigate("/");
+          toast.success("Login Successful");
+          setCookie("refresh_token", res.data["refreshToken"]);
         })
         .catch((err) => {
           console.log(err);

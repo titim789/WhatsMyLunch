@@ -3,26 +3,55 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./ForgetPassword.css";
 import { toast } from "react-toastify";
+import { forgetpassword, forgetpasswordauth } from "../../api";
 
 const Register = ({ handleClose }) => {
   // create state variables for each input
-  const [firstName, setFirstName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(firstName, email);
     //send req to backend
-    //if success
-    if (true) {
-      toast.success("Authenticated. Please Change your password.");
-      setSuccess(true);
+    if (!success) {
+      console.log(username, email);
+      try {
+        const auth = await forgetpasswordauth({
+          username,
+          email,
+        });
+
+        //if success
+        if (auth.status === 200) {
+          toast.success("Authenticated. Please Change your password.");
+          setSuccess(true);
+        } else {
+          //Insert Error here
+          toast.error("Username and/or Email does not exist in our system");
+        }
+      } catch (err) {
+        toast.error("Username and/or Email does not exist in our system");
+      }
     } else {
-      //Insert Error here
-      toast.error("Error");
+      console.log(username, email, password, confPassword);
+      try {
+        const changePass = await forgetpassword({
+          username,
+          email,
+          password,
+          confPassword,
+        });
+
+        if (changePass.status === 200) {
+          toast.success("Password Changed");
+          handleClose();
+        }
+      } catch (err) {
+        toast.error("Failed to change password. Ensure the password matches");
+      }
     }
   };
 
@@ -31,13 +60,13 @@ const Register = ({ handleClose }) => {
       <TextField
         margin="normal"
         fullWidth
-        label="First Name"
+        label="Username"
         variant="filled"
         required
         autoFocus
         disabled={success}
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
         margin="normal"
