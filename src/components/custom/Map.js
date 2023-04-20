@@ -47,5 +47,5 @@ const MapContainer = ({ google, location, food }) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: process.env.GOOGLE_API_KEY,
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(MapContainer);
